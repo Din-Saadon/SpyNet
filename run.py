@@ -167,8 +167,8 @@ def estimate(tenOne, tenTwo):
 ##########################################################
 
 if __name__ == '__main__':
-    dir_ref = args_strOne
-    dir_mod = args_strTwo
+    dir_mod = args_strOne
+    dir_ref = args_strTwo
     path_ref=[]
     path_mod=[]
     for im in os.listdir(dir_ref):
