@@ -167,16 +167,31 @@ def estimate(tenOne, tenTwo):
 ##########################################################
 
 if __name__ == '__main__':
-    tenOne = torch.FloatTensor(numpy.ascontiguousarray(numpy.array(PIL.Image.open(args_strOne))[:, :, ::-1].transpose(2, 0, 1).astype(numpy.float32) * (1.0 / 255.0)))
-    tenTwo = torch.FloatTensor(numpy.ascontiguousarray(numpy.array(PIL.Image.open(args_strTwo))[:, :, ::-1].transpose(2, 0, 1).astype(numpy.float32) * (1.0 / 255.0)))
-
-    tenOutput = estimate(tenOne, tenTwo)
-
-    objOutput = open(args_strOut, 'wb')
-
-    numpy.array([ 80, 73, 69, 72 ], numpy.uint8).tofile(objOutput)
-    numpy.array([ tenOutput.shape[2], tenOutput.shape[1] ], numpy.int32).tofile(objOutput)
-    numpy.array(tenOutput.numpy().transpose(1, 2, 0), numpy.float32).tofile(objOutput)
-
-    objOutput.close()
+    dir_ref = args_strOne
+    dir_mod = args_strTwo
+    path_ref=[]
+    path_mod=[]
+    for im in os.listdir(dir_ref):
+        path_ref+=[os.path.join(dir_ref,im)]
+    for im in os.listdir(dir_mod):
+        path_mod+=[os.path.join(dir_mod,im)]    
+    path_ref.sort()
+    path_mod.sort()
+    path_lst = list(zip(path_ref, path_mod))
+    for pair in path_lst:
+        im1 ,im2 = pair
+        tenOne = torch.FloatTensor(numpy.ascontiguousarray(numpy.array(PIL.Image.open(im1))[:, :, ::-1].transpose(2, 0, 1).astype(numpy.float32) * (1.0 / 255.0)))
+        tenTwo = torch.FloatTensor(numpy.ascontiguousarray(numpy.array(PIL.Image.open(im2))[:, :, ::-1].transpose(2, 0, 1).astype(numpy.float32) * (1.0 / 255.0)))
+    
+        tenOutput = estimate(tenOne, tenTwo)
+        name_img = im1[:-4]
+        name_img = name_img.split('/')[-1]
+        flow_path = args_strOut + "/" name_img + ".flo"
+        objOutput = open(args_strOut, 'wb')
+    
+        numpy.array([ 80, 73, 69, 72 ], numpy.uint8).tofile(objOutput)
+        numpy.array([ tenOutput.shape[2], tenOutput.shape[1] ], numpy.int32).tofile(objOutput)
+        numpy.array(tenOutput.numpy().transpose(1, 2, 0), numpy.float32).tofile(objOutput)
+    
+        objOutput.close()
 # end
