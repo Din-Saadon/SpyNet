@@ -177,7 +177,7 @@ if __name__ == '__main__':
         path_mod+=[os.path.join(dir_mod,im)]    
     path_ref.sort()
     path_mod.sort()
-    path_lst = list(zip(path_ref, path_mod))
+    path_lst = list(zip(path_mod,path_ref))
     for pair in path_lst:
         im1 ,im2 = pair
         tenOne = torch.FloatTensor(numpy.ascontiguousarray(numpy.array(PIL.Image.open(im1))[:, :, ::-1].transpose(2, 0, 1).astype(numpy.float32) * (1.0 / 255.0)))
