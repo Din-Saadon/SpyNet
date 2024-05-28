@@ -8,7 +8,7 @@ For the original Torch version of this work, please see: https://github.com/anur
 Other optical flow implementations from me: [pytorch-pwc](https://github.com/sniklaus/pytorch-pwc), [pytorch-unflow](https://github.com/sniklaus/pytorch-unflow), [pytorch-liteflownet](https://github.com/sniklaus/pytorch-liteflownet)
 
 ## usage
-To run it on your own pair of images, use the following command. You can choose between various models, please make sure to see their paper / the code for more details.
+To run it on your own images , use the following command. You can choose between various models, please make sure to see their paper / the code for more details.
 
 ```
 python run.py --model sintel-final --one {images_dir_one} --two {image_dir_two} --out {res_flow_dir}  
